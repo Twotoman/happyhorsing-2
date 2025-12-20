@@ -7,13 +7,28 @@ export const authConfig = {
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
+      const {pathname} = nextUrl;
+
       const isOnDashboard = nextUrl.pathname.startsWith('/dashboard');
-      if (isOnDashboard) {
-        if (isLoggedIn) return true;
-        return false; // Redirect unauthenticated users to login page
-      } else if (isLoggedIn) {
-        return Response.redirect(new URL('/dashboard', nextUrl));
+
+      //protect root
+      if(pathname === "/"){
+        return Response.redirect(
+          new URL(isLoggedIn ? "/dashboard" : "/login", nextUrl)
+        );
       }
+
+      //protect dashboard if not loggedIn
+      if(pathname === "/dashboard"){
+        return isLoggedIn; //in case false -> NextAuth redirects to /login (see pages)
+      }
+
+      //redirect loggedIn User
+      if(pathname === "/login" && isLoggedIn){
+        return Response.redirect(new URL("/dashboard",nextUrl));
+      }
+
+      //allow everything else
       return true;
     },
   },
