@@ -1,23 +1,31 @@
 'use server';
 
 import {auth} from '@/auth';
-import {LoginButton} from '@/app/components/login/login-button';
+import {redirect} from "next/navigation" 
+import LoginForm from '@/app/components/login/login-form'
 
-export default async function Home() {
+import { Suspense } from 'react';
+ 
+export default async function LoginPage() {
 
   const session = await auth();
   console.log('Session:', session);
+  if (session?.user) redirect("/dashboard") 
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <div className="w-full">
-          <h1 className="text-5xl font-bold text-zinc-900 dark:text-zinc-100">
-            Welcome to <span className="text-blue-600">NextAuth.js</span>
-          </h1>
-          <LoginButton />
+    <main className="flex items-center justify-center md:h-screen">
+      <div className="relative mx-auto flex w-full max-w-[400px] flex-col space-y-2.5 p-4 md:-mt-32">
+        <div className="flex h-20 w-full items-end rounded-lg bg-blue-500 p-3 md:h-24">
+          <div className="w-32 text-white md:w-100">
+            hier soll ein Logo hin
+          </div>
         </div>
-      </main>
-    </div>
+        <Suspense>
+          <LoginForm />
+        </Suspense>
+        <div className="flex h-20 w-full items-end rounded-lg bg-blue-500 p-3 md:h-12" />
+      </div>
+    </main>
   );
 }
+

@@ -1,5 +1,15 @@
 'use server';
+
+import { auth } from "@/auth" 
+import { redirect } from "next/navigation" 
+
 export default async function Home() {
+  
+  //protect root
+  const session = await auth()
+  console.log("SESSION:", session)
+
+  redirect(session?.user ? "/dashboard" : "/login") 
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">

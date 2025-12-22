@@ -2,9 +2,11 @@
 
 import {signIn, signOut} from '@/auth';
 
-export const login = async () => {
+type AuthProvider = 'github' | 'google';
+
+export const login = async (provider: AuthProvider) => {
   
-    await signIn('github', {redirectTo: '/'});
+    await signIn(provider, {redirectTo: '/'});
     console.log('Login function called');
 };
 
