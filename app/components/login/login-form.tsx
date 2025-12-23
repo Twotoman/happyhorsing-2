@@ -73,61 +73,83 @@ export default function LoginForm() {
   }
 
   return (
-    <div style={{ maxWidth: 360, margin: "48px auto", display: "grid", gap: 12 }}>
-      <h1>{mode === "login" ? "Login" : "Register"}</h1>
+    <div className="mx-auto mt-12 grid max-w-sm gap-3">
+        <h1 className="text-2xl font-semibold">
+            {mode === "login" ? "Login" : "Register"}
+        </h1>
 
-      <form onSubmit={onSubmit} style={{ display: "grid", gap: 10 }}>
-        <label>
-          Email
-          <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" required />
-        </label>
+        <form onSubmit={onSubmit} className="grid gap-2.5">
+            <label className="grid gap-1 text-sm">
+            Email
+            <input
+                className="rounded border px-3 py-2 focus:outline-none focus:ring focus:ring-blue-500"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                type="email"
+                required
+            />
+            </label>
 
-        {mode === "register" && (
-          <label>
-            Name (optional)
-            <input value={name} onChange={(e) => setName(e.target.value)} type="text" />
-          </label>
-        )}
+            {mode === "register" && (
+            <label className="grid gap-1 text-sm">
+                Name (optional)
+                <input
+                className="rounded border px-3 py-2 focus:outline-none focus:ring focus:ring-blue-500"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                type="text"
+                />
+            </label>
+            )}
 
-        <label>
-          Password
-          <input
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            type="password"
-            required
-            minLength={6}
-          />
-        </label>
+            <label className="grid gap-1 text-sm">
+            Password
+            <input
+                className="rounded border px-3 py-2 focus:outline-none focus:ring focus:ring-blue-500"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                type="password"
+                required
+                minLength={6}
+            />
+            </label>
 
-        {error && <p style={{ color: "crimson" }}>{error}</p>}
+            {error && <p className="text-sm text-red-600">{error}</p>}
 
-        <button disabled={loading} type="submit">
-          {loading ? "..." : mode === "login" ? "Login" : "Create account"}
-        </button>
-      </form>
-
-      <button
-        type="button"
-        onClick={() => setMode((m) => (m === "login" ? "register" : "login"))}
-      >
-        Switch to {mode === "login" ? "Register" : "Login"}
-      </button>
-
-      <hr />
-
-      <button
-        type="button"
-        onClick={() => login('github')}
-      >
-        Continue with GitHub
-      </button>
             <button
-        type="button"
-        onClick={() => login('google')}
-      >
-        Continue with Google
-      </button>
-    </div>
+            disabled={loading}
+            type="submit"
+            className="rounded bg-blue-600 py-2 text-white hover:bg-blue-700 disabled:opacity-50"
+            >
+            {loading ? "..." : mode === "login" ? "Login" : "Create account"}
+            </button>
+        </form>
+
+        <button
+            type="button"
+            onClick={() => setMode((m) => (m === "login" ? "register" : "login"))}
+            className="text-sm text-blue-600 hover:underline"
+        >
+            Switch to {mode === "login" ? "Register" : "Login"}
+        </button>
+
+        <hr className="my-2" />
+
+        <button
+            type="button"
+            onClick={() => login("github")}
+            className="rounded border py-2 hover:bg-gray-50"
+        >
+            Continue with GitHub
+        </button>
+
+        <button
+            type="button"
+            onClick={() => login("google")}
+            className="rounded border py-2 hover:bg-gray-50"
+        >
+            Continue with Google
+        </button>
+        </div>
   )
 }
