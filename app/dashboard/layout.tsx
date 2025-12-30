@@ -9,6 +9,8 @@ import {
   Users,
 } from "lucide-react";
 
+import HorseHeadIcon from '@/app/components/icons/HorseHeadIcon';
+
 export const metadata = {
   title: "Happy Horsing",
   description: "Pferde-Community und Trainings-App",
@@ -45,7 +47,7 @@ function Header() {
 function Sidebar() {
   const navItems = [
     { name: "Dashboard", path: "/dashboard", icon: <Home size={20} /> },
-    { name: "Meine Pferde", path: "/dashboard/pferde", icon: <Gitlab size={20} /> },
+    { name: "Meine Pferde", path: "/dashboard/pferde", icon: <HorseHeadIcon/> },
     { name: "Training", path: "/dashboard/training", icon: <Dumbbell size={20} /> },
     { name: "Ernährung", path: "/dashboard/ernaehrung", icon: <Utensils size={20} /> },
     { name: "Turniere", path: "/dashboard/turniere", icon: <Trophy size={20} /> },

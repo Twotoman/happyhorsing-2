@@ -1,28 +1,75 @@
 @import "tailwindcss";
 
+/* Tokens (Light) */
 :root {
   --background: #ffffff;
   --foreground: #171717;
   --foreground-muted: #6b7280;
-}
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-foreground-muted: var(--foreground-muted);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --card: #ffffff;
+  --card-foreground: #171717;
+
+  --border: #e5e7eb;
+  --ring: #93c5fd;
+
+  --primary: #2563eb;
+  --primary-foreground: #ffffff;
+
+  --destructive: #dc2626;
+  --destructive-foreground: #ffffff;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --foreground-muted: #9ca3af;
+
+    --card: #111827;
+    --card-foreground: #ededed;
+
+    --border: #273244;
+    --ring: #60a5fa;
+
+    --primary: #60a5fa;
+    --primary-foreground: #0a0a0a;
+
+    --destructive: #ef4444;
+    --destructive-foreground: #0a0a0a;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Tailwind v4 Theme mapping -> Klassen wie bg-background, text-foreground, border-border ... */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-foreground-muted: var(--foreground-muted);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* Base defaults (keine theme() Funktion, kein @apply auf Tokens nötig) */
+@layer base {
+  html {
+    color-scheme: light dark;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans, ui-sans-serif, system-ui);
+  }
 }

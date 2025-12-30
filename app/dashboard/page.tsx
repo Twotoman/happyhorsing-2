@@ -1,6 +1,6 @@
 'use server';
 
-import {auth} from '@/auth';
+import {auth} from '@/auth/auth';
 import Image from 'next/image';
 import { LogoutButton } from '@/app/components/login/logout-button';
 import { redirect } from "next/navigation" 
