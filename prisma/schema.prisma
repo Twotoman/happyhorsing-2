@@ -93,6 +93,7 @@ model Session {
 enum Role {
   OWNER
   TRAINER
+  RIDER
   CLUB_ADMIN
 }
 
