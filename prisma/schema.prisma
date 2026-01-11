@@ -13,6 +13,12 @@ datasource db {
   provider  = "postgresql"
 }
 
+enum Role {
+  OWNER
+  TRAINER
+  RIDER
+  CLUB_ADMIN
+}
 
 
 // =====================
@@ -39,6 +45,7 @@ model User {
 
   ownedHorses   Horse[]   @relation("OwnerRelation")
   trainedHorses Horse[]   @relation("TrainerRelation")
+  ridingHorses  Horse[]   @relation("RidersRelation")
 
 }
 
@@ -90,13 +97,6 @@ model Session {
 }
 
 
-enum Role {
-  OWNER
-  TRAINER
-  RIDER
-  CLUB_ADMIN
-}
-
 // =====================
 // Horses
 // =====================
@@ -105,8 +105,8 @@ model Horse {
   name         String
   ownerId      String
   owner        User          @relation("OwnerRelation", fields: [ownerId], references: [id])
-  trainerId    String?
-  trainer      User?         @relation("TrainerRelation", fields: [trainerId], references: [id])
+  trainers     User[]        @relation("TrainerRelation")
+  riders       User[]        @relation("RidersRelation")
   clubId       String?
   club         Club?         @relation(fields: [clubId], references: [id])
 
