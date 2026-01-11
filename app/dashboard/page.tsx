@@ -2,13 +2,13 @@
 
 import {auth} from '@/auth/auth';
 import Image from 'next/image';
-import { LogoutButton } from '@/app/components/login/logout-button';
+import { LogoutButton } from '@/components/login/logout-button';
 import { redirect } from "next/navigation" 
 
 export default async function Home() {
 
     const session = await auth();
-    console.log('Session:', session);
+    //console.log('Session:', session);
     if (!session?.user) redirect("/login")
 
     return (

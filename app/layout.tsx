@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { auth } from "@/auth/auth";
-import NextAuthSessionProvider from "@/app/components/providers/SessionProvider";
+import NextAuthSessionProvider from "@/components/providers/SessionProvider";
+import { ThemeProvider } from "@/components/providers/theme-provider";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -17,11 +18,13 @@ export default async function RootLayout({
   const session = await auth();
 
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body>
-        <NextAuthSessionProvider session={session}>
-          {children}
-        </NextAuthSessionProvider>
+        <ThemeProvider>
+          <NextAuthSessionProvider session={session}>
+            {children}
+          </NextAuthSessionProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

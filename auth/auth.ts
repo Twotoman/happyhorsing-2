@@ -7,7 +7,7 @@ import { z } from 'zod';
 import bcrypt from 'bcrypt';
 import { prisma } from "@/db/client";
 import { PrismaAdapter } from "@auth/prisma-adapter";
-import {getUserByEmail} from "@/lib/db/data"
+import {getUserByEmail} from "@/lib/db/auth"
 
 
 
@@ -17,6 +17,28 @@ export const {auth, handlers, signIn, signOut} = NextAuth({
     session: {
         strategy: 'jwt',
         maxAge: 30 * 24 * 60 * 60, // 30 days
+    },
+    callbacks: {
+        async jwt({ token, user }) {
+            // user ist nur beim initialen Login gesetzt
+            if (user) {
+            const dbUser = await prisma.user.findUnique({
+                where: { id: user.id! },
+                select: { roles: true },
+            });
+
+            token.roles = dbUser?.roles ?? [];
+            }
+            return token;
+        },
+
+        async session({ session, token }) {
+            if (session.user) {
+            session.user.id = token.sub as string;
+            session.user.roles = (token.roles as string[]) ?? [];
+            }
+            return session;
+        },
     },
     // ✅ Production-ready cookie configuration
     cookies: {

@@ -2,14 +2,13 @@
 
 import {auth} from '@/auth/auth';
 import {redirect} from "next/navigation" 
-import LoginForm from '@/app/components/login/login-form'
+import LoginForm from '@/components/login/login-form'
 
 import { Suspense } from 'react';
  
 export default async function LoginPage() {
 
   const session = await auth();
-  console.log('Session:', session);
   if (session?.user) redirect("/dashboard") 
 
   return (

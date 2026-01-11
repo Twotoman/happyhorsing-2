@@ -24,6 +24,7 @@ model User {
   email         String?   @unique
   emailVerified DateTime?
   image         String?
+  roles Role[]   @default([OWNER])
 
   accounts      Account[]
   sessions      Session[]
@@ -32,6 +33,12 @@ model User {
   updatedAt     DateTime  @updatedAt
 
   passwordHash  String?  // bei Credentials-Login nötig
+
+  clubId        String?
+  club          Club?     @relation(fields: [clubId], references: [id])
+
+  ownedHorses   Horse[]   @relation("OwnerRelation")
+  trainedHorses Horse[]   @relation("TrainerRelation")
 
 }
 
@@ -83,6 +90,39 @@ model Session {
 }
 
 
+enum Role {
+  OWNER
+  TRAINER
+  CLUB_ADMIN
+}
+
+// =====================
+// Horses
+// =====================
+model Horse {
+  id           String        @id @default(uuid())
+  name         String
+  ownerId      String
+  owner        User          @relation("OwnerRelation", fields: [ownerId], references: [id])
+  trainerId    String?
+  trainer      User?         @relation("TrainerRelation", fields: [trainerId], references: [id])
+  clubId       String?
+  club         Club?         @relation(fields: [clubId], references: [id])
+
+  imageUrl  String?  // Hier wird die URL vom Supabase Storage gespeichert
+  breed     String?
+}
+
+
+// =====================
+// Club
+// =====================
+model Club {
+  id      String   @id @default(uuid())
+  name    String
+  users   User[]
+  horses  Horse[]
+}
 
 // =====================
 // Verification Token
