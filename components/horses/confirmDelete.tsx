@@ -58,14 +58,11 @@ export function ConfirmDelete({
         </AlertDialogHeader>
 
         <AlertDialogFooter>
-          <AlertDialogCancel disabled={isPending}>
-            Abbrechen
-          </AlertDialogCancel>
+          <AlertDialogCancel disabled={isPending}>Abbrechen</AlertDialogCancel>
 
           <AlertDialogAction
             onClick={handleConfirm}
             disabled={isPending}
-            className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
           >
             {isPending ? 'Löschen…' : 'Löschen'}
           </AlertDialogAction>
